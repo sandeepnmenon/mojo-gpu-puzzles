@@ -1,3 +1,8 @@
+## Overview
+Implement a kernel that adds 10 to each position of 2D square matrix `a` and stores it in 2D square matrix `output`.
+
+**Note:** _You have more threads than positions_.
+
 ## Key concepts
 
 In this puzzle, you'll learn about:
@@ -34,9 +39,26 @@ The key insight is understanding how to map from 2D thread coordinates \\((i,j)\
 
 To test your solution, run the following command in your terminal:
 
+<div class="code-tabs" data-tab-group="package-manager">
+  <div class="tab-buttons">
+    <button class="tab-button">uv</button>
+    <button class="tab-button">pixi</button>
+  </div>
+  <div class="tab-content">
+
 ```bash
-magic run p04
+uv run poe p04
 ```
+
+  </div>
+  <div class="tab-content">
+
+```bash
+pixi run p04
+```
+
+  </div>
+</div>
 
 Your output will look like this if the puzzle isn't solved yet:
 ```txt
@@ -58,6 +80,6 @@ expected: HostBuffer([10.0, 11.0, 12.0, 13.0])
 This solution:
 1. Get 2D indices:  `row = thread_idx.y`, `col = thread_idx.x`
 2. Add guard: `if row < size and col < size`
-3. Inside guard: `out[row * size + col] = a[row * size + col] + 10.0`
+3. Inside guard: `output[row * size + col] = a[row * size + col] + 10.0`
 </div>
 </details>

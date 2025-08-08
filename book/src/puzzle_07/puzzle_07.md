@@ -1,7 +1,8 @@
 # Puzzle 7: 2D Blocks
 
 ## Overview
-Implement a kernel that adds 10 to each position of matrix `a` and stores it in `out`.
+
+Implement a kernel that adds 10 to each position of matrix `a` and stores it in `output`.
 
 **Note:** _You have fewer threads per block than the size of `a` in both directions._
 
@@ -16,7 +17,7 @@ Implement a kernel that adds 10 to each position of matrix `a` and stores it in 
 
 > 🔑 **2D thread indexing convention**
 >
-> We extend the block-based indexing from [puzzle 04](../puzzle_04/puzzle_04.md) to 2D:
+> We extend the block-based indexing from [puzzle 4](../puzzle_04/puzzle_04.md) to 2D:
 >
 > ```txt
 > Global position calculation:
@@ -24,7 +25,6 @@ Implement a kernel that adds 10 to each position of matrix `a` and stores it in 
 > col = block_dim.x * block_idx.x + thread_idx.x
 > ```
 >
-> [TODO: replace with animation]
 > For example, with 2×2 blocks in a 4×4 grid:
 > ```txt
 > Block (0,0):   Block (1,0):

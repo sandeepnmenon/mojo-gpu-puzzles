@@ -9,16 +9,19 @@ title = "Mojo 🔥 GPU Puzzles"
 additional-css = [
     "theme/css/custom.css",
     "theme/css/highlight.css",
+    "theme/css/tabs.css",
 ]
 additional-js = [
     "theme/mojolang.js",
     "theme/sidebar.js",
     "theme/solution.js",
     "theme/init-amplitude.js",
+    "theme/tabs.js",
 ]
 default-theme = "light"
 preferred-dark-theme = "ayu"
 copy-fonts = true
+favicon_svg=true
 smart-punctuation = true
 no-section-label = true
 git-repository-url = "https://github.com/modular/mojo-gpu-puzzles"
@@ -26,7 +29,6 @@ mathjax-support = true
 theme-switcher = true
 no-theme-selection = false
 draft = true
-favicon = "images/puzzle-mark.svg"
 
 [output.html.highlight]
 enable = true
@@ -54,7 +56,7 @@ mode = "katex"
 [build]
 build-dir = "html"
 create-missing = true
-extra-files = ["logo", "images"]
+extra-files = ["logo", "puzzles_images"]
 
 [preprocessor.index]
 index = false
@@ -63,4 +65,3 @@ index = false
 # Enables use of {{#include file.md}} to include other files
 renderers = ["html"]
 some-attribute = "value"
-

@@ -1,7 +1,7 @@
 # Puzzle 3: Guards
 
 ## Overview
-Implement a kernel that adds 10 to each position of vector `a` and stores it in vector `out`.
+Implement a kernel that adds 10 to each position of vector `a` and stores it in vector `output`.
 
 **Note**: _You have more threads than positions. This means you need to protect against out-of-bounds memory access._
 
@@ -17,14 +17,14 @@ In this puzzle, you'll learn about:
 
 ### Mathematical Description
 For each thread \\(i\\):
-\\[\Large \text{if}\\ i < \text{size}: out[i] = a[i] + 10\\]
+\\[\Large \text{if}\\ i < \text{size}: output[i] = a[i] + 10\\]
 
 ### Memory Safety Pattern
 ```txt
-Thread 0 (i=0):  if 0 < size:  out[0] = a[0] + 10  ✓ Valid
-Thread 1 (i=1):  if 1 < size:  out[1] = a[1] + 10  ✓ Valid
-Thread 2 (i=2):  if 2 < size:  out[2] = a[2] + 10  ✓ Valid
-Thread 3 (i=3):  if 3 < size:  out[3] = a[3] + 10  ✓ Valid
+Thread 0 (i=0):  if 0 < size:  output[0] = a[0] + 10  ✓ Valid
+Thread 1 (i=1):  if 1 < size:  output[1] = a[1] + 10  ✓ Valid
+Thread 2 (i=2):  if 2 < size:  output[2] = a[2] + 10  ✓ Valid
+Thread 3 (i=3):  if 3 < size:  output[3] = a[3] + 10  ✓ Valid
 Thread 4 (i=4):  if 4 < size:  ❌ Skip (out of bounds)
 Thread 5 (i=5):  if 5 < size:  ❌ Skip (out of bounds)
 ```
@@ -48,7 +48,7 @@ Thread 5 (i=5):  if 5 < size:  ❌ Skip (out of bounds)
 
 1. Store `thread_idx.x` in `i`
 2. Add guard: `if i < size`
-3. Inside guard: `out[i] = a[i] + 10.0`
+3. Inside guard: `output[i] = a[i] + 10.0`
 </div>
 </details>
 
@@ -56,9 +56,26 @@ Thread 5 (i=5):  if 5 < size:  ❌ Skip (out of bounds)
 
 To test your solution, run the following command in your terminal:
 
+<div class="code-tabs" data-tab-group="package-manager">
+  <div class="tab-buttons">
+    <button class="tab-button">uv</button>
+    <button class="tab-button">pixi</button>
+  </div>
+  <div class="tab-content">
+
 ```bash
-magic run p03
+uv run poe p03
 ```
+
+  </div>
+  <div class="tab-content">
+
+```bash
+pixi run p03
+```
+
+  </div>
+</div>
 
 Your output will look like this if the puzzle isn't solved yet:
 ```txt
@@ -104,4 +121,4 @@ if i < height and j < width and k < depth and
    i >= padding and j >= padding: ...
 ```
 
-These boundary handling patterns will become more elegant when we [learn about LayoutTensor in Puzzle 4](../puzzle_04/), which provides built-in boundary checking and shape management.
+These boundary handling patterns will become more elegant when we [learn about LayoutTensor in Puzzle 4](../puzzle_04/), which provides built-in shape management.

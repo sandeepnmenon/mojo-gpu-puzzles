@@ -11,14 +11,14 @@ Let's look at the challenges we've faced so far:
 
 ```mojo
 # Puzzle 1: Simple indexing
-out[i] = a[i] + 10.0
+output[i] = a[i] + 10.0
 
 # Puzzle 2: Multiple array management
-out[i] = a[i] + b[i]
+output[i] = a[i] + b[i]
 
 # Puzzle 3: Bounds checking
 if i < size:
-    out[i] = a[i] + 10.0
+    output[i] = a[i] + 10.0
 ```
 
 As dimensions grow, code becomes more complex:
@@ -26,7 +26,7 @@ As dimensions grow, code becomes more complex:
 # Traditional 2D indexing for row-major 2D matrix
 idx = row * WIDTH + col
 if row < height and col < width:
-    out[idx] = a[idx] + 10.0
+    output[idx] = a[idx] + 10.0
 ```
 
 ## The solution: A peek at LayoutTensor
@@ -34,7 +34,6 @@ if row < height and col < width:
 LayoutTensor will help us tackle these challenges with elegant solutions. Here's a glimpse of what's coming:
 
 1. **Natural Indexing**: Use `tensor[i, j]` instead of manual offset calculations
-2. **Automatic Bounds Checking**: Built-in protection against out-of-bounds access
 3. **Flexible Memory Layouts**: Support for row-major, column-major, and tiled organizations
 4. **Performance Optimization**: Efficient memory access patterns for GPU
 
@@ -154,7 +153,28 @@ Let's put everything together with a simple example that demonstrates the basics
 {{#include ./intro.mojo}}
 ```
 
-When we run this code with `magic run layout_tensor_intro`, we see:
+When we run this code with:
+
+<div class="code-tabs" data-tab-group="package-manager">
+  <div class="tab-buttons">
+    <button class="tab-button">uv</button>
+    <button class="tab-button">pixi</button>
+  </div>
+  <div class="tab-content">
+
+```bash
+uv run poe layout_tensor_intro
+```
+
+  </div>
+  <div class="tab-content">
+
+```bash
+pixi run layout_tensor_intro
+```
+
+  </div>
+</div>
 
 ```txt
 Before:
@@ -174,7 +194,6 @@ Let's break down what's happening:
 This simple example demonstrates key LayoutTensor benefits:
 - Clean syntax for tensor creation and access
 - Automatic memory layout handling
-- Built-in bounds checking
 - Natural multi-dimensional indexing
 
 While this example is straightforward, the same patterns will scale to complex GPU operations in upcoming puzzles. You'll see how these basic concepts extend to:

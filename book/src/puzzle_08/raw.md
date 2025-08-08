@@ -1,3 +1,9 @@
+## Overview
+
+Implement a kernel that adds 10 to each position of a vector `a` and stores it in `output`.
+
+**Note:** _You have fewer threads per block than the size of `a`._
+
 ## Key concepts
 
 In this puzzle, you'll learn about:
@@ -23,6 +29,8 @@ Notes:
 
 > **Warning**: Each block can only have a *constant* amount of shared memory that threads in that block can read and write to. This needs to be a literal python constant, not a variable. After writing to shared memory you need to call [barrier](https://docs.modular.com/mojo/stdlib/gpu/sync/barrier/) to ensure that threads do not cross.
 
+**Educational Note**: In this specific puzzle, the `barrier()` isn't strictly necessary since each thread only accesses its own shared memory location. However, it's included to teach proper shared memory synchronization patterns for more complex scenarios where threads need to coordinate access to shared data.
+
 ## Code to complete
 
 ```mojo
@@ -35,9 +43,9 @@ Notes:
 
 <div class="solution-tips">
 
-1. Wait for shared memory load with `barrier()`
+1. Wait for shared memory load with `barrier()` (educational - not strictly needed here)
 2. Use `local_i` to access shared memory: `shared[local_i]`
-3. Use `global_i` for output: `out[global_i]`
+3. Use `global_i` for output: `output[global_i]`
 4. Add guard: `if global_i < size`
 </div>
 </details>
@@ -46,9 +54,26 @@ Notes:
 
 To test your solution, run the following command in your terminal:
 
+<div class="code-tabs" data-tab-group="package-manager">
+  <div class="tab-buttons">
+    <button class="tab-button">uv</button>
+    <button class="tab-button">pixi</button>
+  </div>
+  <div class="tab-content">
+
 ```bash
-magic run p08
+uv run poe p08
 ```
+
+  </div>
+  <div class="tab-content">
+
+```bash
+pixi run p08
+```
+
+  </div>
+</div>
 
 Your output will look like this if the puzzle isn't solved yet:
 ```txt
@@ -70,7 +95,7 @@ expected: HostBuffer([11.0, 11.0, 11.0, 11.0, 11.0, 11.0, 11.0, 11.0])
 This solution demonstrates key concepts of shared memory usage in GPU programming:
 
 1. **Memory hierarchy**
-   - Global memory: `a` and `out` arrays (slow, visible to all blocks)
+   - Global memory: `a` and `output` arrays (slow, visible to all blocks)
    - Shared memory: `shared` array (fast, thread-block local)
    - Example for 8 elements with 4 threads per block:
      ```txt
@@ -89,7 +114,9 @@ This solution demonstrates key concepts of shared memory usage in GPU programmin
      barrier()    ↓         ↓        ↓         ↓   # Wait for all loads
      ```
    - Process phase: Each thread adds 10 to its shared memory value
-   - Result: `out[i] = shared[local_i] + 10 = 11`
+   - Result: `output[i] = shared[local_i] + 10 = 11`
+
+   **Note**: In this specific case, the `barrier()` isn't strictly necessary since each thread only writes to and reads from its own shared memory location (`shared[local_i]`). However, it's included for educational purposes to demonstrate proper shared memory synchronization patterns that are essential when threads need to access each other's data.
 
 3. **Index mapping**
    - Global index: `block_dim.x * block_idx.x + thread_idx.x`

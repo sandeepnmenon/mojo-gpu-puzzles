@@ -14,12 +14,12 @@ alias dtype = DType.float32
 
 
 fn add_10_shared(
-    out: UnsafePointer[Scalar[dtype]],
+    output: UnsafePointer[Scalar[dtype]],
     a: UnsafePointer[Scalar[dtype]],
     size: Int,
 ):
     shared = stack_allocation[
-        TPB * sizeof[dtype](),
+        TPB,
         Scalar[dtype],
         address_space = AddressSpace.SHARED,
     ]()

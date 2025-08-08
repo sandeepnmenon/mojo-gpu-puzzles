@@ -1,7 +1,8 @@
 # Puzzle 6: Blocks
 
 ## Overview
-Implement a kernel that adds 10 to each position of vector `a` and stores it in `out`.
+
+Implement a kernel that adds 10 to each position of vector `a` and stores it in `output`.
 
 **Note:** _You have fewer threads per block than the size of a._
 
@@ -30,7 +31,7 @@ The key insight is understanding how blocks of threads work together to process 
 
 1. Calculate global index: `i = block_dim.x * block_idx.x + thread_idx.x`
 2. Add guard: `if i < size`
-3. Inside guard: `out[i] = a[i] + 10.0`
+3. Inside guard: `output[i] = a[i] + 10.0`
 </div>
 </details>
 
@@ -38,9 +39,26 @@ The key insight is understanding how blocks of threads work together to process 
 
 To test your solution, run the following command in your terminal:
 
+<div class="code-tabs" data-tab-group="package-manager">
+  <div class="tab-buttons">
+    <button class="tab-button">uv</button>
+    <button class="tab-button">pixi</button>
+  </div>
+  <div class="tab-content">
+
 ```bash
-magic run p06
+uv run poe p06
 ```
+
+  </div>
+  <div class="tab-content">
+
+```bash
+pixi run p06
+```
+
+  </div>
+</div>
 
 Your output will look like this if the puzzle isn't solved yet:
 ```txt
@@ -89,7 +107,7 @@ This solution demonstrates key concepts of block-based GPU processing:
 
 4. **Memory access pattern**
    - Coalesced memory access: threads in a block access contiguous memory
-   - Each thread processes one element: `out[i] = a[i] + 10.0`
+   - Each thread processes one element: `output[i] = a[i] + 10.0`
    - Block-level parallelism enables efficient memory bandwidth utilization
 
 This pattern forms the foundation for processing large datasets that exceed the size of a single thread block.

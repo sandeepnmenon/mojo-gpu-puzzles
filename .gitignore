@@ -1,9 +1,7 @@
 # pixi environments
 .pixi
 *.egg-info
-# magic environments
-.magic
-magic.lock
+*.lock
 # misc
 *.DS_Store
 __pycache__
@@ -14,7 +12,14 @@ book/html
 
 book/src/puzzle_*/media/images/
 book/src/puzzle_*/media/texts/
+book/src/puzzle_*/media/Tex/
 book/src/puzzle_*/media/videos/*/partial_movie_files/
 
 # Vercel
 .vercel
+
+# Mojo artifacts
+*.mojopkg
+
+# rules
+.cursor/

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="book/src/images/puzzle-mark.svg" alt="Mojo GPU Puzzles Logo" width="150">
+  <img src="book/src/puzzles_images/puzzle-mark.svg" alt="Mojo GPU Puzzles Logo" width="150">
 </p>
 
 <p align="center">
@@ -44,7 +44,7 @@
 
 Welcome to **Mojo🔥 GPU Puzzles** — an interactive approach to learning GPU programming through hands-on puzzle solving. Instead of traditional textbook learning, you'll immediately dive into writing real GPU code and seeing the results.
 
-Start Learning Now 👉 [https://builds.modular.com/puzzles](https://builds.modular.com/puzzles)
+Start Learning Now 👉 [puzzles.modular.com](https://puzzles.modular.com/)
 
 > 📬 [Subscribe to updates](https://www.modular.com/company/talk-to-us) to get notified when new puzzles are released!
 
@@ -72,27 +72,74 @@ You'll need a [compatible GPU](https://docs.modular.com/max/faq#gpu-requirements
    git clone https://github.com/modular/mojo-gpu-puzzles
    cd mojo-gpu-puzzles
    ```
-2. Install `magic` CLI to run the Mojo🔥 programs:
-   ```bash
-   curl -ssL https://magic.modular.com/ | bash
-   ```
-   or update it
-   ```bash
-   magic self-update
-   ```
-3. Start solving puzzles!
+3. Install a package manager to run the Mojo🔥 programs:
+
+    ### **(Recommended) Option 1**: [pixi](https://pixi.sh/latest/#installation)
+
+    `pixi` is the **recommended option** for this project because:
+    - ✅ Easy access to Modular's MAX/Mojo packages
+    - ✅ Handles CUDA toolkit and GPU dependencies
+    - ✅ Full conda + PyPI ecosystem support
+
+    **Note: A few puzzles only work with `pixi`.**
+
+    **Install:**
+    ```bash
+    curl -fsSL https://pixi.sh/install.sh | sh
+    ```
+
+    **Update:**
+    ```bash
+    pixi self-update
+    ```
+
+    ### Option 2: [`uv`](https://docs.astral.sh/uv/getting-started/installation/)
+
+    **Install:**
+    ```bash
+    curl -fsSL https://astral.sh/uv/install.sh | sh
+    ```
+
+    **Update:**
+    ```bash
+    uv self update
+    ```
+
+    **Create a virtual environment:**
+    ```bash
+    uv venv && source .venv/bin/activate
+    ```
+
+4. Start solving puzzles!
 
 ## Development
 
+We use `pixi` for development as it includes `uv` and also supports conda packages (like `mdbook` from the `conda-forge` channel) needed for development workflows.
+
 ```bash
 # Build and serve the book
-magic run book
+pixi run book
 
 # Test solutions on GPU
-magic run tests
+pixi run tests
+# Or a specific puzzle
+pixi run tests pXX
+# Or manually
+pixi run mojo/python solutions/pXX/pXX.{mojo,py}
+
+# Run GPU sanitizers for debugging on NVIDIA GPUs using `compute-sanitizer`
+pixi run memcheck  <optional pXX>    # Detect memory errors
+pixi run racecheck <optional pXX>    # Detect race conditions
+pixi run synccheck <optional pXX>    # Detect synchronization errors
+pixi run initcheck <optional pXX>    # Detect uninitialized memory access
+# Or run all sanitizer tools
+pixi run sanitizers pXX
+# Or manually
+# Note: ignore the mojo runtime error collision with the sanitizer. Look for `Error SUMMARY`
+pixi run compute-sanitizer --tool {memcheck,racecheck,synccheck,initcheck} mojo solutions/pXX/pXX.mojo
 
 # Format code
-magic run format
+pixi run format
 ```
 
 ## Contributing
