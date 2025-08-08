@@ -34,7 +34,7 @@ fn add_10_shared(
     barrier()
 
     if global_i < size:
-        out[global_i] = shared[local_i] + 10.0
+        output[global_i] = shared[local_i] + 10.0
 
 
 # ANCHOR_END: add_10_shared
